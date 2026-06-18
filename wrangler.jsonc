@@ -2,6 +2,9 @@
   "name": "slicenbites",
   "main": "src/index.js",
   "compatibility_date": "2026-06-18",
+  "vars": {
+    "CF_ACCOUNT_ID": "c9ebdcc0a5ef0420a6951586ad81fe13"
+  },
   "assets": {
     "directory": "./public",
     "binding": "ASSETS"
