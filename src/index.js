@@ -1,4 +1,16 @@
-export async function onRequestPost({ request, env }) {
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+
+    if (url.pathname === "/api/feedback" && request.method === "POST") {
+      return handleFeedback(request, env);
+    }
+
+    return env.ASSETS.fetch(request);
+  },
+};
+
+async function handleFeedback(request, env) {
   const form = await request.formData();
   const name = (form.get("name") || "").toString().trim();
   const email = (form.get("email") || "").toString().trim();
@@ -17,13 +29,11 @@ export async function onRequestPost({ request, env }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        to: "you@youremail.com",          // where you receive messages
-        from: "contact@yourdomain.com",   // must be your onboarded domain
+        to: "you@youremail.com",
+        from: "feedback@slicenbites.org",
         subject: `New contact message from ${name}`,
         text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-        html: `<p><strong>Name:</strong> ${name}</p>
-<p><strong>Email:</strong> ${email}</p>
-<p>${message}</p>`,
+        html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p>${message}</p>`,
       }),
     }
   );
