@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
+
+# Node dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# OneDrive
+~$*
+
+# GitHub
+.github/
+*.github
