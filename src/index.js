@@ -30,7 +30,7 @@ async function handleFeedback(request, env) {
       },
       body: JSON.stringify({
         to: "you@youremail.com",
-        from: "contact@yourdomain.com",
+        from: "feedback@slicenbites.org",
         subject: `New contact message from ${name}`,
         text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
         html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p>${message}</p>`,
