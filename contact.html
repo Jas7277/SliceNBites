@@ -32,11 +32,11 @@
   <p>Phone: +1 (709) 589-6192<br>Email: slicenbites@hotmail.com</p>
 
   <h2>Send me feedback!</h2>
-  <form>
-    <input type="text" placeholder="Your Name" required><br><br>
-    <input type="email" placeholder="Your Email" required><br><br>
-    <textarea placeholder="Your Message" rows="5"></textarea><br><br>
-    <button class="button">Send</button>
+  <form action="mailto:slicenbites@hotmail.com" method="POST" enctype="text/plain">
+    <input type="text" name="Name" placeholder="Your Name" required><br><br>
+    <input type="email" name="Email" placeholder="Your Email" required><br><br>
+    <textarea name="Message" placeholder="Your Message" rows="5"></textarea><br><br>
+    <button class="button" type="submit">Send</button>
   </form>
 </div>
 
