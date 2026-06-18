@@ -31,6 +31,7 @@ async function handleFeedback(request, env) {
       body: JSON.stringify({
         to: "slicenbites@hotmail.com",
         from: "feedback@slicenbites.org",
+        reply_to: email,
         subject: `New contact message from ${name}`,
         text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
         html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p>${message}</p>`,
@@ -38,12 +39,7 @@ async function handleFeedback(request, env) {
     }
   );
 
-  const detail = await res.text(); // the API's actual response
-  if (!res.ok) {
-    console.error("Email API error:", res.status, detail);
-    // TEMPORARY — remove once it works; don't leak API errors to visitors long-term
-    return new Response(`Email API error ${res.status}: ${detail}`, { status: 502 });
-  }
-
-  return new Response("Thanks! Your message has been sent.", { status: 200 });
+  return res.ok
+    ? new Response("Thanks! Your message has been sent.", { status: 200 })
+    : new Response("Sorry, something went wrong sending your message.", {status: 502})
 }
