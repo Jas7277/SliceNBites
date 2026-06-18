@@ -47,32 +47,5 @@
   © 2026 Slice N Bites — All Rights Reserved
 </footer>
 
-<script>
-  const feedbackForm = document.getElementById('feedback-form');
-  const formMessages = document.getElementById('form-messages');
-
-  feedbackForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-    const recipient = 'slicenbites@hotmail.com';
-
-    formMessages.innerHTML = '';
-
-    if (!name || !email || !message) {
-      formMessages.innerHTML = '<p>Please fill out all fields before sending.</p>';
-      return;
-    }
-
-    const subject = encodeURIComponent('Website feedback from ' + name);
-    const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
-    const mailtoLink = 'mailto:' + recipient + '?subject=' + subject + '&body=' + body;
-
-    window.location.href = mailtoLink;
-  });
-</script>
-
 </body>
 </html>
