@@ -174,6 +174,17 @@
       .about-avatar { order: -1; }
       .section { padding-top: var(--space-lg); }
     }
+
+    .about-avatar__disc {
+      overflow: hidden;
+    }
+
+    .about-avatar__disc img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
     </style>
 </head>
 <body>
@@ -224,7 +235,9 @@
     <div class="about-avatar reveal d2">
       <div class="about-avatar__disc" aria-hidden="true">
         <!-- Swap this for a real photo of yourself for the best effect! -->
-        <div class="cheesecake-icon"><img src="images/strawberry-cheesecake.png" alt="Slice N Bites"></div>
+        <div class="about-avatar__disc">
+          <img src="images/strawberry-cheesecake.png" alt="Strawberry Cheesecake">
+        </div>
       </div>
       <div class="about-stamp">Baked fresh in&nbsp;Brigus</div>
     </div>
