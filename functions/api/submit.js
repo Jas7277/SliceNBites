@@ -33,13 +33,13 @@ async function parseRequestBody(request) {
   return null;
 }
 
-async function sendEmailWithSendGrid(env, name, email, message) {
-  const apiKey = env.SENDGRID_API_KEY;
+async function sendEmailWithMailChannels(env, name, email, message) {
+  const apiKey = env.MAILCHANNELS_API_KEY;
   const recipient = env.FEEDBACK_RECIPIENT_EMAIL || 'scottjas595@gmail.com';
-  const sender = env.SENDGRID_SENDER_EMAIL || 'no-reply@yourdomain.com';
+  const sender = env.MAILCHANNELS_SENDER_EMAIL || 'no-reply@yourdomain.com';
 
   if (!apiKey) {
-    throw new Error('SendGrid API key is not configured.');
+    throw new Error('MailChannels API key is not configured.');
   }
 
   const payload = {
@@ -65,7 +65,7 @@ async function sendEmailWithSendGrid(env, name, email, message) {
     ],
   };
 
-  const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
+  const response = await fetch('https://api.mailchannels.net/tx/v1/send', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -76,7 +76,7 @@ async function sendEmailWithSendGrid(env, name, email, message) {
 
   if (!response.ok) {
     const details = await response.text();
-    throw new Error(`SendGrid request failed (${response.status}): ${details}`);
+    throw new Error(`MailChannels request failed (${response.status}): ${details}`);
   }
 }
 
@@ -110,7 +110,7 @@ export default {
     }
 
     try {
-      await sendEmailWithSendGrid(env, name, email, message);
+      await sendEmailWithMailChannels(env, name, email, message);
       return createJsonResponse({ success: true, message: 'Feedback submitted successfully.' });
     } catch (error) {
       return createJsonResponse({ error: error.message || 'Failed to send feedback.' }, 502);
