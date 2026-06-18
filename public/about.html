@@ -4,7 +4,177 @@
     <meta charset="UTF-8">
     <title>Slice N Bites</title>
     <link rel="icon" type="image/png" href="images/logo.png">
+
+    <!-- Fonts: Inter (body, your existing choice) + Fraunces (display, new) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <style>
+      :root { --font-display: "Fraunces", Georgia, serif; }
+ 
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      color: var(--color-heading);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+ 
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-accent);
+    }
+ 
+    /* Hero */
+    .about-hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--space-lg);
+      align-items: center;
+      background: var(--color-hero-bg);
+      border-radius: calc(var(--radius) * 1.5);
+      padding: clamp(32px, 5vw, 64px);
+      box-shadow: 0 20px 45px rgba(95, 42, 2, 0.08);
+    }
+    .about-hero__title {
+      font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+      margin: 12px 0 16px;
+    }
+    .about-hero__lead { font-size: 1.1rem; max-width: 46ch; }
+ 
+    .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      color: var(--color-heading); padding: 7px 14px; border-radius: 999px;
+      font-weight: 600; font-size: 0.85rem;
+    }
+    .badge svg { width: 15px; height: 15px; color: var(--color-accent); }
+ 
+    .button-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .button--ghost {
+      background: transparent; color: var(--color-accent);
+      box-shadow: none; border: 1.5px solid var(--color-accent);
+    }
+    .button--ghost:hover { background: var(--color-accent); color: #fff; box-shadow: none; }
+ 
+    /* Hero avatar + stamp */
+    .about-avatar { position: relative; justify-self: center; }
+    .about-avatar__disc {
+      width: clamp(170px, 24vw, 230px); aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle at 32% 26%, #fff7f1, var(--color-accent));
+      display: grid; place-items: center; color: #fff;
+      box-shadow: 0 18px 40px rgba(192, 93, 44, 0.28);
+    }
+    .about-avatar__disc svg { width: 46%; height: 46%; }
+    .about-stamp {
+      position: absolute; bottom: -8px; right: -8px; width: 96px; height: 96px;
+      border-radius: 50%; background: var(--color-surface);
+      border: 2px dashed var(--color-accent); color: var(--color-heading);
+      font-family: var(--font-display); font-weight: 600; font-size: 0.7rem;
+      display: grid; place-items: center; text-align: center; line-height: 1.15;
+      padding: 10px; transform: rotate(-12deg); box-shadow: 0 8px 18px rgba(95, 42, 2, 0.14);
+    }
+ 
+    /* Section scaffolding */
+    .section { padding: var(--space-xl) 0 0; }
+    .section-head { margin-bottom: var(--space-md); }
+    .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 8px; }
+    .section-head p { max-width: 62ch; }
+    .prose p { max-width: 68ch; font-size: 1.05rem; margin-bottom: 14px; }
+    .pullquote {
+      font-family: var(--font-display); font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      color: var(--color-heading); border-left: 4px solid var(--color-accent);
+      padding: 4px 0 4px 22px; margin: 26px 0; line-height: 1.32;
+    }
+ 
+    /* Journey timeline */
+    .timeline { position: relative; margin-top: var(--space-md); padding-left: 30px; }
+    .timeline::before {
+      content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px;
+      width: 2px; background: var(--color-border);
+    }
+    .timeline-item { position: relative; padding-bottom: 26px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: ""; position: absolute; left: -30px; top: 4px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--color-accent); box-shadow: 0 0 0 4px var(--color-hero-bg);
+    }
+    .timeline-item.is-dream::before { background: var(--color-surface); border: 2px solid var(--color-accent); }
+    .timeline-date { font-weight: 700; color: var(--color-accent); font-size: 0.9rem; }
+    .timeline-item h3 { font-size: 1.15rem; margin: 3px 0 5px; }
+ 
+    /* Offerings + values cards */
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: var(--space-md); margin-top: var(--space-md);
+    }
+    .feature-card {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: calc(var(--radius) * 1.2); padding: var(--space-md);
+      box-shadow: 0 18px 40px rgba(95, 42, 2, 0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 22px 48px rgba(95, 42, 2, 0.1); }
+    .feature-card__icon {
+      width: 46px; height: 46px; border-radius: 12px; background: var(--color-hero-bg);
+      display: grid; place-items: center; color: var(--color-accent); margin-bottom: 12px;
+    }
+    .feature-card__icon svg { width: 24px; height: 24px; }
+    .feature-card h3 { font-size: 1.15rem; margin-bottom: 6px; }
+    .feature-card p { font-size: 0.95rem; }
+ 
+    /* Top sellers */
+    .sellers { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: var(--space-md); }
+    .chip {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: 999px; padding: 10px 18px; font-weight: 600; color: var(--color-heading);
+    }
+    .chip--star { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+    .chip--star span { font-weight: 400; opacity: 0.88; font-size: 0.85rem; }
+ 
+    /* Allergen note */
+    .note-callout {
+      display: flex; gap: 14px; align-items: flex-start; margin-top: var(--space-md);
+      background: #fff7f1; border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-accent); border-radius: var(--radius); padding: 18px 20px;
+    }
+    .note-callout svg { width: 22px; height: 22px; color: var(--color-accent); flex: none; margin-top: 2px; }
+    .note-callout strong { color: var(--color-heading); }
+ 
+    /* Closing */
+    .closing {
+      text-align: center; background: var(--color-hero-bg);
+      border-radius: calc(var(--radius) * 1.5); padding: clamp(40px, 6vw, 72px) var(--space-md);
+      margin-top: var(--space-xl); box-shadow: 0 20px 45px rgba(95, 42, 2, 0.08);
+    }
+    .closing h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); margin-bottom: 14px; }
+    .closing p { max-width: 56ch; margin: 0 auto var(--space-md); font-size: 1.1rem; }
+ 
+    /* Quality floor: focus + motion */
+    a:focus-visible, .button:focus-visible {
+      outline: 3px solid var(--color-accent); outline-offset: 3px; border-radius: 4px;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity: 0; transform: translateY(16px); animation: rise 0.7s ease forwards; }
+      .reveal.d1 { animation-delay: 0.06s; }
+      .reveal.d2 { animation-delay: 0.12s; }
+      .reveal.d3 { animation-delay: 0.18s; }
+      @keyframes rise { to { opacity: 1; transform: none; } }
+    }
+ 
+    @media (max-width: 760px) {
+      .about-hero { grid-template-columns: 1fr; }
+      .about-avatar { order: -1; }
+      .section { padding-top: var(--space-lg); }
+    }
+    </style>
 </head>
 <body>
 
@@ -21,32 +191,199 @@
 </header>
 
 <div class="container">
-  <h1>About me</h1>
-
-  <p>Hey everyone, my name is Taylor Clarke and I'm 23 years old. I've been baking ever since I was little up until now. It's always been a big interest of mine. 
-    I especially love seeing the reactions of my delicious treats and getting feedback from people!
-    I started my at home business on March 21, 2023 in upper island cove and relocated to Brigus July 18th, 2025!
-    Currently, I offer cheesecakes as my top selling item followed by cookies, brownies, muffins and tartlets!
-    When I was 16, I had a medical mystery happen to me and I still don't have all the answers yet but I was misdiagnosed with celiac disease and fully diagnosed with lactose intolerance.
-    In that journey, I noticed there isn't a lot of fresh baked goods available with both gluten free and lactose free options; combined with family members that have diabetes, this is what inspired me to create the best recipes with these options available so everyone can enjoy a treat!
-    So now I offer gluten free, lactose free, and diabetic friendly options.
-    <br>
-    <b>*NOTE*</b>: While I am extremely cautious with cross contamination,
-    I cannot guarantee a 100% chance of no cross contamination.
-    <br>
-    Why should you choose me as your local bakery?
-    I put so much love, care, and joy into all of my desserts, ensuring they're made to perfection and taste amazing!
-    I'm very flexible with my schedule so I can fit you in if need be and I can help you customize your baked goods to however you'd like.
-    I'm even happy to make you items that aren't on the menu!
-
-    My goal one day is to run my business out of a cozy but old fashioned style bakery built right here in Brigus!
-    I'd like to have a place inside and outside where people can come and sit down and enjoy their homemade treats, catch up with a friend, have a date, or study up until closing time!
-  </p>
+ 
+  <!-- HERO -->
+  <section class="about-hero">
+    <div>
+      <span class="eyebrow reveal">Brigus, Newfoundland</span>
+      <h1 class="about-hero__title reveal d1">Hi, I'm Taylor — and&nbsp;I bake for everyone.</h1>
+      <p class="about-hero__lead reveal d2">
+        I'm the baker behind Slice N Bites, a from-scratch home bakery making treats
+        that people with dietary restrictions don't usually get to enjoy.
+      </p>
+      <div class="badge-row reveal d2">
+        <span class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 22l4-4"/><path d="M12 2c2 3 2 6 0 9-2-3-2-6 0-9z"/><path d="M7 8c3 1 4 4 4 7-3-1-4-4-4-7z"/><path d="M17 8c-3 1-4 4-4 7 3-1 4-4 4-7z"/><path d="M3 3l18 18"/></svg>
+          Gluten free
+        </span>
+        <span class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h6l1 4v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6z"/><path d="M3 3l18 18"/></svg>
+          Lactose free
+        </span>
+        <span class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><path d="M9 11h6"/></svg>
+          Diabetic friendly
+        </span>
+      </div>
+      <div class="button-row reveal d3">
+        <a class="button" href="contact.html">Order a treat</a>
+        <a class="button button--ghost" href="menu.html">See the menu</a>
+      </div>
+    </div>
+ 
+    <div class="about-avatar reveal d2">
+      <div class="about-avatar__disc" aria-hidden="true">
+        <!-- Swap this for a real photo of yourself for the best effect! -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 11h12l-1 9a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1z"/>
+          <path d="M6 11a3 3 0 0 1 1.5-2.6A3 3 0 0 1 12 5a3 3 0 0 1 4.5 3.4A3 3 0 0 1 18 11"/>
+          <path d="M12 2v2"/>
+        </svg>
+      </div>
+      <div class="about-stamp">Baked fresh in&nbsp;Brigus</div>
+    </div>
+  </section>
+ 
+  <!-- STORY -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">My story</span>
+      <h2>Baking has always been my thing</h2>
+    </div>
+    <div class="prose">
+      <p>
+        I've been baking since I was little and never stopped — it's always been the
+        thing I light up about. I'm 23 now, and the part I love most hasn't changed:
+        watching someone take the first bite and seeing their reaction. The feedback,
+        the surprise, the "wait, this is gluten free?" — that's the whole reason I do this.
+      </p>
+      <p class="pullquote">
+        "I want everyone to be able to enjoy a treat — no matter what they can or can't eat."
+      </p>
+    </div>
+  </section>
+ 
+  <!-- JOURNEY TIMELINE -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">The journey</span>
+      <h2>How Slice N Bites grew</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">March 21, 2023</div>
+        <h3>It started at home</h3>
+        <p>I opened Slice N Bites as an at-home business in Upper Island Cove.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">July 18, 2025</div>
+        <h3>A new home in Brigus</h3>
+        <p>I relocated the bakery to Brigus, where I bake today.</p>
+      </div>
+      <div class="timeline-item is-dream">
+        <div class="timeline-date">Someday soon</div>
+        <h3>A bakery of my own</h3>
+        <p>
+          My dream is a cozy, old-fashioned bakery right here in Brigus — a warm spot
+          to sit inside or out, meet a friend, go on a date, or study until closing.
+        </p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ALLERGEN-FRIENDLY -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">Why allergen-friendly</span>
+      <h2>Treats made for every diet</h2>
+      <p>
+        When I was 16, a medical mystery turned things upside down. I was misdiagnosed
+        with celiac disease and later diagnosed with lactose intolerance — and with
+        diabetes in my family, I kept noticing how hard it is to find fresh-baked goods
+        that work for all of us. So I learned to make them myself, without giving up on taste.
+      </p>
+    </div>
+    <div class="card-grid">
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 22l4-4"/><path d="M12 2c2 3 2 6 0 9-2-3-2-6 0-9z"/><path d="M7 8c3 1 4 4 4 7-3-1-4-4-4-7z"/><path d="M17 8c-3 1-4 4-4 7 3-1 4-4 4-7z"/><path d="M3 3l18 18"/></svg>
+        </div>
+        <h3>Gluten free</h3>
+        <p>Recipes built to be gluten free from the start — not an afterthought.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h6l1 4v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6z"/><path d="M3 3l18 18"/></svg>
+        </div>
+        <h3>Lactose free</h3>
+        <p>All the richness you expect, without the lactose your body doesn't want.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/><path d="M9 11h6"/></svg>
+        </div>
+        <h3>Diabetic friendly</h3>
+        <p>Options that let people managing diabetes enjoy dessert again.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- TOP SELLERS -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">What I bake</span>
+      <h2>Crowd favourites</h2>
+    </div>
+    <div class="sellers">
+      <span class="chip chip--star">Cheesecakes <span>· top seller</span></span>
+      <span class="chip">Cookies</span>
+      <span class="chip">Brownies</span>
+      <span class="chip">Muffins</span>
+      <span class="chip">Tartlets</span>
+    </div>
+  </section>
+ 
+  <!-- WHY CHOOSE ME -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">Why choose me</span>
+      <h2>What you get with Slice N Bites</h2>
+    </div>
+    <div class="card-grid">
+      <div class="feature-card">
+        <svg class="feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="background:none;width:26px;height:26px;color:var(--color-accent)"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A3.5 3.5 0 0 0 12 6 3.5 3.5 0 0 0 2 8.5C2 10.7 3.5 12.5 5 14l7 7z"/></svg>
+        <h3>Made with love</h3>
+        <p>Every dessert gets real care — made to perfection, every time.</p>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="background:none;width:26px;height:26px;color:var(--color-accent)"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <h3>Flexible scheduling</h3>
+        <p>I'll do my best to fit your order in when you need it.</p>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="background:none;width:26px;height:26px;color:var(--color-accent)"><path d="M12 2l2.4 5 5.6.6-4 4 1 5.4-5-2.6-5 2.6 1-5.4-4-4 5.6-.6z"/></svg>
+        <h3>Fully customizable</h3>
+        <p>Your treats, your way — tell me what you're picturing and I'll make it.</p>
+      </div>
+      <div class="feature-card">
+        <svg class="feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="background:none;width:26px;height:26px;color:var(--color-accent)"><path d="M12 5v14M5 12h14"/></svg>
+        <h3>Off-menu welcome</h3>
+        <p>Want something that isn't on the menu? I'm happy to make it happen.</p>
+      </div>
+    </div>
+ 
+    <div class="note-callout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      <p>
+        <strong>A note on allergies:</strong> I'm extremely careful about cross-contamination,
+        but everything is made in a home kitchen, so I can't guarantee a 100% allergen-free environment.
+      </p>
+    </div>
+  </section>
+ 
+  <!-- CLOSING CTA -->
+  <section class="closing">
+    <span class="eyebrow">Let's bake something</span>
+    <h2>Have a treat in mind?</h2>
+    <p>Whether it's on the menu or a one-of-a-kind request, I'd love to make it for you.</p>
+    <a class="button" href="contact.html">Get in touch</a>
+  </section>
+ 
 </div>
-
+ 
 <footer>
   © 2026 Slice N Bites — All Rights Reserved
 </footer>
-
+ 
 </body>
 </html>
