@@ -35,7 +35,7 @@ async function parseRequestBody(request) {
 
 async function sendEmailWithSendGrid(env, name, email, message) {
   const apiKey = env.SENDGRID_API_KEY;
-  const recipient = env.FEEDBACK_RECIPIENT_EMAIL || 'slicenbites@hotmail.com';
+  const recipient = env.FEEDBACK_RECIPIENT_EMAIL || 'scottjas595@gmail.com';
   const sender = env.SENDGRID_SENDER_EMAIL || 'no-reply@yourdomain.com';
 
   if (!apiKey) {
