@@ -1,10 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Slice N Bites</title>
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Slice N Bites</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Same fonts as your About page -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+      :root { --font-display: "Fraunces", Georgia, serif; }
+ 
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      color: var(--color-heading);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .eyebrow { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.75rem; font-weight: 700; color: var(--color-accent); }
+ 
+    .section { padding: var(--space-xl) 0 0; }
+    .section-head { margin-bottom: var(--space-md); }
+    .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 8px; }
+    .section-head p { max-width: 62ch; }
+ 
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: var(--space-md); margin-top: var(--space-md);
+    }
+    .feature-card {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: calc(var(--radius) * 1.2); padding: var(--space-md);
+      box-shadow: 0 18px 40px rgba(95, 42, 2, 0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 22px 48px rgba(95, 42, 2, 0.1); }
+    .feature-card__icon {
+      width: 46px; height: 46px; border-radius: 12px; background: var(--color-hero-bg);
+      display: grid; place-items: center; color: var(--color-accent); margin-bottom: 12px;
+    }
+    .feature-card__icon svg { width: 24px; height: 24px; }
+    .feature-card h3 { font-size: 1.15rem; margin-bottom: 6px; }
+    .feature-card p { font-size: 0.95rem; }
+    .feature-card a { color: var(--color-accent); font-weight: 600; text-decoration: none; }
+    .feature-card a:hover { text-decoration: underline; }
+ 
+    a:focus-visible, .button:focus-visible {
+      outline: 3px solid var(--color-accent); outline-offset: 3px; border-radius: 4px;
+    }
+ 
+    /* =====================================================================
+       CONTACT PAGE — new styles for this page (hero, form panel, fields)
+       ===================================================================== */
+    .page-hero {
+      background: var(--color-hero-bg);
+      border-radius: calc(var(--radius) * 1.5);
+      padding: clamp(32px, 5vw, 60px);
+      box-shadow: 0 20px 45px rgba(95, 42, 2, 0.08);
+    }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 12px 0 14px; }
+    .page-hero p { max-width: 52ch; font-size: 1.1rem; }
+ 
+    .form-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: calc(var(--radius) * 1.3);
+      padding: clamp(24px, 4vw, 40px);
+      box-shadow: 0 18px 40px rgba(95, 42, 2, 0.06);
+      max-width: 640px;
+    }
+ 
+    .feedback-form { display: grid; gap: 16px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-size: 0.8rem; font-weight: 600; color: var(--color-heading); }
+    .feedback-form input,
+    .feedback-form textarea {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-text);
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--button-radius);
+      padding: 12px 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .feedback-form textarea { resize: vertical; min-height: 140px; }
+    .feedback-form input::placeholder,
+    .feedback-form textarea::placeholder { color: #b89684; }
+    .feedback-form input:focus,
+    .feedback-form textarea:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(216, 125, 81, 0.18);
+    }
+    button.button {
+      border: none; cursor: pointer; font-family: var(--font-body);
+      font-size: 1rem; justify-self: start; margin-top: 4px;
+    }
+ 
+    .form-status { margin-top: 14px; font-weight: 600; font-size: 0.95rem; }
+    .form-status:empty { display: none; }
+    .form-status.is-pending { color: var(--color-text); }
+    .form-status.is-success { color: #2f7a3f; }
+    .form-status.is-error { color: #b23b2e; }
+ 
+    @media (max-width: 600px) {
+      .section { padding-top: var(--space-lg); }
+    }
+  </style>
 </head>
 <body>
 
@@ -21,46 +129,105 @@
 </header>
 
 <div class="container">
-  <h1>Location & Contact</h1>
-
-  <h2>Location</h2>
-  <p><a href="https://maps.app.goo.gl/rdAnHm1tiYbVeD8KA">1 Youden Place, Brigus, NL A0A 1K0, Canada</a></p>
-
-  <h2>Hours</h2>
-  <p>24/7</p>
-
-  <h2>Contact</h2>
-  <p>Phone: +1 (709) 589-6192<br>Email: slicenbites@hotmail.com</p>
-
-  <h2>Send me feedback!</h2>
-
-  <div id="form-messages" aria-live="polite"></div>
-
-  <form id="feedback-form">
-    <input type="text" id="name" name="name" placeholder="Your Name" required><br><br>
-    <input type="email" id="email" name="email" placeholder="Your Email" required><br><br>
-    <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea><br><br>
-    <button class="button" type="submit">Send</button>
-  </form>
-  <p id="form-status" role="status"></p>
+ 
+  <!-- HERO -->
+  <section class="page-hero">
+    <span class="eyebrow">Get in touch</span>
+    <h1>Visit, call, or send a message</h1>
+    <p>Pick up a treat in Brigus, ask about a custom order, or just say hello — I'd love to hear from you.</p>
+  </section>
+ 
+  <!-- CONTACT DETAILS -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">The details</span>
+      <h2>Where to find me</h2>
+    </div>
+    <div class="card-grid">
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        </div>
+        <h3>Location</h3>
+        <p>1 Youden Place<br>Brigus, NL A0A 1K0</p>
+        <p><a href="https://maps.app.goo.gl/rdAnHm1tiYbVeD8KA" target="_blank" rel="noopener">Get directions →</a></p>
+      </div>
+ 
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </div>
+        <h3>Hours</h3>
+        <p>Open for orders<br>24/7</p>
+      </div>
+ 
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L20 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <h3>Phone</h3>
+        <p><a href="tel:+17095896192">+1 (709) 589-6192</a></p>
+      </div>
+ 
+      <div class="feature-card">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        </div>
+        <h3>Email</h3>
+        <p><a href="mailto:slicenbites@hotmail.com">slicenbites@hotmail.com</a></p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- FEEDBACK FORM -->
+  <section class="section">
+    <div class="section-head">
+      <span class="eyebrow">Send me a message</span>
+      <h2>Questions, feedback &amp; custom orders</h2>
+      <p>Have something in mind or just want to share a thought? Fill this out and I'll get back to you.</p>
+    </div>
+ 
+    <div class="form-card">
+      <form id="feedback-form">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" placeholder="Jane Doe" required>
+        </div>
+        <div class="field">
+          <label for="email">Your email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="message">Your message</label>
+          <textarea id="message" name="message" placeholder="Tell me what you're looking for…" rows="5" required></textarea>
+        </div>
+        <button class="button" type="submit">Send message</button>
+      </form>
+      <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+ 
 </div>
-
+ 
 <script>
   const contactForm = document.getElementById("feedback-form");
   const formStatus = document.getElementById("form-status");
-
+ 
   contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();                  // stop the page reload
     formStatus.textContent = "Sending…";
+    formStatus.className = "form-status is-pending";
     try {
       const response = await fetch("/api/feedback", {
         method: "POST",
         body: new FormData(contactForm),     // sends name, email, message
       });
       formStatus.textContent = await response.text();
+      formStatus.className = "form-status " + (response.ok ? "is-success" : "is-error");
       if (response.ok) contactForm.reset();
     } catch {
       formStatus.textContent = "Network error — please try again.";
+      formStatus.className = "form-status is-error";
     }
   });
 </script>
