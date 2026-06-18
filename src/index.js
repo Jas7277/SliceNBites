@@ -29,7 +29,7 @@ async function handleFeedback(request, env) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        to: "scottjas595@gmail.com",
+        to: "slicenbites@hotmail.com",
         from: "feedback@slicenbites.org",
         subject: `New contact message from ${name}`,
         text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
