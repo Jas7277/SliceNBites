@@ -1,0 +1,34 @@
+export async function onRequestPost({ request, env }) {
+  const form = await request.formData();
+  const name = (form.get("name") || "").toString().trim();
+  const email = (form.get("email") || "").toString().trim();
+  const message = (form.get("message") || "").toString().trim();
+
+  if (!name || !email || !message) {
+    return new Response("All fields are required.", { status: 400 });
+  }
+
+  const res = await fetch(
+    `https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}/email/sending/send`,
+    {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${env.EMAIL_API_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: "you@youremail.com",          // where you receive messages
+        from: "contact@yourdomain.com",   // must be your onboarded domain
+        subject: `New contact message from ${name}`,
+        text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+        html: `<p><strong>Name:</strong> ${name}</p>
+<p><strong>Email:</strong> ${email}</p>
+<p>${message}</p>`,
+      }),
+    }
+  );
+
+  return res.ok
+    ? new Response("Thanks! Your message has been sent.", { status: 200 })
+    : new Response("Sorry, something went wrong sending your message.", { status: 502 });
+}

@@ -41,7 +41,28 @@
     <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea><br><br>
     <button class="button" type="submit">Send</button>
   </form>
+  <p id="form-status" role="status"></p>
 </div>
+
+<script>
+  const contactForm = document.getElementById("feedback-form");
+  const formStatus = document.getElementById("form-status");
+
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();                  // stop the page reload
+    formStatus.textContent = "Sending…";
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        body: new FormData(contactForm),     // sends name, email, message
+      });
+      formStatus.textContent = await response.text();
+      if (response.ok) contactForm.reset();
+    } catch {
+      formStatus.textContent = "Network error — please try again.";
+    }
+  });
+</script>
 
 <footer>
   © 2026 Slice N Bites — All Rights Reserved
