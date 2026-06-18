@@ -14,7 +14,7 @@
       <a href="index.html">Home</a>
       <a href="menu.html">Menu</a>
       <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="contact.php">Contact</a>
     </div>
   </nav>
 </header>
@@ -32,10 +32,13 @@
   <p>Phone: +1 (709) 589-6192<br>Email: slicenbites@hotmail.com</p>
 
   <h2>Send me feedback!</h2>
-  <form action="mailto:slicenbites@hotmail.com" method="POST" enctype="text/plain">
-    <input type="text" name="Name" placeholder="Your Name" required><br><br>
-    <input type="email" name="Email" placeholder="Your Email" required><br><br>
-    <textarea name="Message" placeholder="Your Message" rows="5"></textarea><br><br>
+
+  <div id="form-messages" aria-live="polite"></div>
+
+  <form id="feedback-form">
+    <input type="text" id="name" name="name" placeholder="Your Name" required><br><br>
+    <input type="email" id="email" name="email" placeholder="Your Email" required><br><br>
+    <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea><br><br>
     <button class="button" type="submit">Send</button>
   </form>
 </div>
@@ -43,6 +46,33 @@
 <footer>
   © 2026 Slice N Bites — All Rights Reserved
 </footer>
+
+<script>
+  const feedbackForm = document.getElementById('feedback-form');
+  const formMessages = document.getElementById('form-messages');
+
+  feedbackForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const recipient = 'slicenbites@hotmail.com';
+
+    formMessages.innerHTML = '';
+
+    if (!name || !email || !message) {
+      formMessages.innerHTML = '<p>Please fill out all fields before sending.</p>';
+      return;
+    }
+
+    const subject = encodeURIComponent('Website feedback from ' + name);
+    const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+    const mailtoLink = 'mailto:' + recipient + '?subject=' + subject + '&body=' + body;
+
+    window.location.href = mailtoLink;
+  });
+</script>
 
 </body>
 </html>
