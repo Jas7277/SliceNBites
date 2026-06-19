@@ -425,11 +425,11 @@ a:focus-visible,
 .social-link {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-large);
   color: (var(--color-accent));
   font-weight: 600;
   text-decoration: none;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .social-link:hover { color: var(--color-accent-hover); text-decoration: underline; }
 .social-link svg { width: 22px; height: 22px; }
