@@ -421,3 +421,15 @@ a:focus-visible,
 @media (max-width: 600px) {
   .section { padding-top: var(--space-lg); }
 }
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: (var(--color-accent));
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+.social-link:hover { color: var(--color-accent-hover); text-decoration: underline; }
+.social-link svg { width: 22px; height: 22px; }
