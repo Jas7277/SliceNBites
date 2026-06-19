@@ -1,4 +1,9 @@
 /* ================================
+   FONTS
+   ================================ */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ================================
    THEME VARIABLES
    ================================ */
 :root {
@@ -14,6 +19,7 @@
 
   /* Typography */
   --font-body: "Inter", sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
   --line-height: 1.6;
 
   /* Layout */
@@ -81,7 +87,7 @@ nav a:hover {
 }
 
 /* ================================
-   LAYOUT
+   LAYOUT + HEADINGS
    ================================ */
 .container {
   max-width: var(--max-width);
@@ -89,13 +95,20 @@ nav a:hover {
   padding: 0 var(--space-md);
 }
 
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  color: var(--color-heading);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
 h1, h2 {
   margin-bottom: var(--space-md);
-  color: var(--color-heading);
 }
 
 /* ================================
-   HERO SECTION
+   HERO (original centered hero)
    ================================ */
 .hero {
   text-align: center;
@@ -133,6 +146,27 @@ h1, h2 {
   box-shadow: 0 18px 30px rgba(212, 139, 92, 0.2);
 }
 
+.button--ghost {
+  background: transparent;
+  color: var(--color-accent);
+  box-shadow: none;
+  border: 1.5px solid var(--color-accent);
+}
+
+.button--ghost:hover {
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: none;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-top: var(--space-md);
+}
+
 /* ================================
    GRID LAYOUTS
    ================================ */
@@ -144,7 +178,7 @@ h1, h2 {
 }
 
 /* ================================
-   CARDS
+   CARDS (original)
    ================================ */
 .card {
   background: var(--color-surface);
@@ -178,10 +212,212 @@ footer {
   display: block;
 }
 
-.logo-text {
-  font-family: "Fraunces", serif;
+/* ================================================================
+   SHARED DESIGN SYSTEM
+   Used across Home, About, and Contact. Page-specific styles
+   (hero variants, the photo disc, the timeline, the form fields)
+   still live in each page's own <style> block.
+   ================================================================ */
+
+/* Eyebrow label */
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
   font-weight: 700;
-  font-size: 1.5rem;
+  color: var(--color-accent);
+}
+
+/* Section rhythm */
+.section {
+  padding: var(--space-xl) 0 0;
+}
+
+.section-head {
+  margin-bottom: var(--space-md);
+}
+
+.section-head h2 {
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  margin-bottom: 8px;
+}
+
+.section-head p {
+  max-width: 62ch;
+}
+
+/* Dietary / feature badges */
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   color: var(--color-heading);
-  letter-spacing: -0.01em;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.badge svg {
+  width: 15px;
+  height: 15px;
+  color: var(--color-accent);
+}
+
+/* Feature cards (icon + heading + text) */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.feature-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--radius) * 1.2);
+  padding: var(--space-md);
+  box-shadow: 0 18px 40px rgba(95, 42, 2, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 48px rgba(95, 42, 2, 0.1);
+}
+
+.feature-card__icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--color-hero-bg);
+  display: grid;
+  place-items: center;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+}
+
+.feature-card__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.feature-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+}
+
+.feature-card a {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.feature-card a:hover {
+  text-decoration: underline;
+}
+
+/* Pill chips (e.g. popular treats) */
+.sellers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: var(--space-md);
+}
+
+.chip {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.chip--star {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.chip--star span {
+  font-weight: 400;
+  opacity: 0.88;
+  font-size: 0.85rem;
+}
+
+/* Inline text link with arrow */
+.text-link {
+  display: inline-block;
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: var(--space-md);
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
+/* Closing call-to-action panel */
+.closing {
+  text-align: center;
+  background: var(--color-hero-bg);
+  border-radius: calc(var(--radius) * 1.5);
+  padding: clamp(40px, 6vw, 72px) var(--space-md);
+  margin-top: var(--space-xl);
+  box-shadow: 0 20px 45px rgba(95, 42, 2, 0.08);
+}
+
+.closing h2 {
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  margin-bottom: 14px;
+}
+
+.closing p {
+  max-width: 56ch;
+  margin: 0 auto var(--space-md);
+  font-size: 1.1rem;
+}
+
+.closing .button-row {
+  justify-content: center;
+}
+
+/* Keyboard focus visibility */
+a:focus-visible,
+.button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Gentle load-in animation (skipped if the user prefers reduced motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: rise 0.7s ease forwards;
+  }
+  .reveal.d1 { animation-delay: 0.07s; }
+  .reveal.d2 { animation-delay: 0.14s; }
+  .reveal.d3 { animation-delay: 0.21s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+}
+
+@media (max-width: 600px) {
+  .section { padding-top: var(--space-lg); }
 }
