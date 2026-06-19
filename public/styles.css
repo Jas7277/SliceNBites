@@ -422,6 +422,12 @@ a:focus-visible,
   .section { padding-top: var(--space-lg); }
 }
 
-
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  color: (var(--color-accent));
+  font-weight: 600;
+  text-decoration: none;
+}
 .social-link:hover { color: var(--color-accent-hover); text-decoration: underline; }
 .social-link svg { width: 22px; height: 22px; }
