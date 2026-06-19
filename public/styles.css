@@ -429,7 +429,6 @@ a:focus-visible,
   color: (var(--color-accent));
   font-weight: 600;
   text-decoration: none;
-  margin-bottom: 8px;
 }
 .social-link:hover { color: var(--color-accent-hover); text-decoration: underline; }
 .social-link svg { width: 22px; height: 22px; }
