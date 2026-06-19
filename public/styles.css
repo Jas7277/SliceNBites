@@ -423,8 +423,6 @@ a:focus-visible,
 }
 
 .social-link {
-  display: inline-flex;
-  align-items: center;
   color: (var(--color-accent));
   font-weight: 600;
   text-decoration: none;
