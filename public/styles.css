@@ -423,11 +423,22 @@ a:focus-visible,
 }
 
 .social-link {
-  color: (var(--color-accent));
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-accent);
   font-weight: 600;
   text-decoration: none;
   margin-right: 8px;
   margin-top: 8px;
 }
-.social-link:hover { color: var(--color-accent-hover); text-decoration: underline; }
-.social-link svg { width: 22px; height: 22px; }
+.social-link:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+.social-link svg {
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  transform: translateY(1px);
+}
