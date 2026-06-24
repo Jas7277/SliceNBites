@@ -32,6 +32,9 @@ async function handleFeedback(request, env) {
         to: "slicenbites@hotmail.com",
         from: "feedback@slicenbites.org",
         reply_to: email,
+        headers: {
+          "Reply-To": email
+        },
         subject: `New contact message from ${name}`,
         text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
         html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p>${message}</p>`,
