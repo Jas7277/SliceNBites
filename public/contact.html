@@ -67,6 +67,8 @@
       .section { padding-top: var(--space-lg); }
     }
   </style>
+
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -155,6 +157,7 @@
           <label for="message">Your message</label>
           <textarea id="message" name="message" placeholder="Tell me what you're looking for…" rows="5" required></textarea>
         </div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAADypbH69USyicnqr"></div>
         <button class="button" type="submit">Send message</button>
       </form>
       <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
