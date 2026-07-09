@@ -97,6 +97,17 @@
       padding: 8px 12px;
       margin-bottom: var(--space-md);
     }
+
+    .price-group {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      color: var(--color-heading);
+      margin-top: 4px;
+    }
+    
+    .price-group:first-child { margin-top: 0; }
     </style>
 </head>
 <body>
@@ -167,10 +178,12 @@
           <li>Any other flavour</li>
         </ul>
         <div class="price-tag">
-          <div class="price-line"><span class="unit">For 6</span><span class="amount">$18.50</span></div>
+          <div class="price-group">Regular</div>
+          <div class="price-line"><span class="unit">6</span><span class="amount">$18.50</span></div>
           <div class="price-line"><span class="unit">Dozen</span><span class="amount">$35</span></div>
-          <div class="price-line"><span class="unit">Variety Pack of 6</span><span class="amount">$20</span></div>
-          <div class="price-line"><span class="unit">Variety Pack of a Dozen</span><span class="amount">$36.50</span></div>
+          <div class="price-group">Variety Pack</div>
+          <div class="price-line"><span class="unit">6</span><span class="amount">$20</span></div>
+          <div class="price-line"><span class="unit">Dozen</span><span class="amount">$36.50</span></div>
         </div>
       </div>
  
