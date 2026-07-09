@@ -6,6 +6,17 @@ export default {
       return handleFeedback(request, env);
     }
 
+    if (url.pathname === "/.well-known/security.txt") {
+      return new Response(
+      `Contact: mailto:jas7277git@gmail.com
+      Expires: 2027-07-01T00:00:00.000Z
+      Preferred-Languages: en
+      Canonical: https://slicenbites.org/.well-known/security.txt
+      `,
+      { headers: { "Content-Type": "text/plain; charset=utf-8" } }
+    );
+  }
+
     return env.ASSETS.fetch(request);
   },
 };
