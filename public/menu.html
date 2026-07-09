@@ -87,6 +87,29 @@
     .cupcake-img {
       transform: scale(0.85) translateY(2%);
     }
+
+    .card-note {
+      font-size: 0.82rem;
+      color: var(--color-text);
+      background: #fff7f1;
+      border-left: 3px solid var(--color-accent);
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: var(--space-md);
+    }
+
+    .price-group {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      color: var(--color-heading);
+      margin-top: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    
+    .price-group:first-child { margin-top: 0; }
     </style>
 </head>
 <body>
@@ -115,7 +138,6 @@
   <div class="menu-tabs" role="tablist" aria-label="Menu sections">
     <button class="menu-tab is-active" data-tab="gourmet" role="tab" aria-selected="true">Gourmet Menu</button>
     <button class="menu-tab" data-tab="diabetic" role="tab" aria-selected="false">Diabetic-Friendly</button>
-    <button class="menu-tab" data-tab="cheesecakes" role="tab" aria-selected="false">Cheesecakes</button>
   </div>
  
   <!-- PANEL: GOURMET -->
@@ -127,7 +149,7 @@
     <div class="menu-grid-cards">
       <div class="menu-card">
         <div class="card-photo">
-          <img class="menu-item" src="images/muffins.png", alt="Slice N Bites muffins">
+          <img class="menu-item" src="images/muffins.png" alt="Slice N Bites muffins">
         </div>
         <h3>Muffins</h3>
         <ul class="menu-list">
@@ -139,33 +161,57 @@
         <div class="price-tag">
           <div class="price-line"><span class="unit">Each</span><span class="amount">$2.25</span></div>
           <div class="price-line"><span class="unit">Dozen</span><span class="amount">$25</span></div>
-          <div class="price-line"><span class="unit">Variety Pack</span><span class="amount">$28</span></div>
         </div>
       </div>
- 
+
       <div class="menu-card">
         <div class="card-photo">
-          <img class="menu-item" src="images/cookies.jpg", alt="Slice N Bites cookies">
+          <img class="menu-item" src="images/cookies.jpg" alt="Slice N Bites cookies">
         </div>
-        <h3>Cookies</h3>
+        <h3>XL Cookies</h3>
+        <p class="sub">(4+ oz)</p>
         <ul class="menu-list">
+          <li>Gourmet Oreo</li>
           <li>Blueberry Poptart</li>
           <li>S'mores</li>
           <li>Orange creamsicle</li>
-          <li>Strawberry</li>
+          <li>Strawberry Crunch</li>
           <li>Chocolate chip</li>
           <li>Any other flavour</li>
         </ul>
         <div class="price-tag">
-          <div class="price-line"><span class="unit">Each</span><span class="amount">$3.00</span></div>
-          <div class="price-line"><span class="unit">Dozen</span><span class="amount">$36</span></div>
-          <div class="price-line"><span class="unit">Variety pack</span><span class="amount">$40</span></div>
+          <div class="price-group">Regular</div>
+          <div class="price-line"><span class="unit">6</span><span class="amount">$18.50</span></div>
+          <div class="price-line"><span class="unit">Dozen</span><span class="amount">$35</span></div>
+          <div class="price-group">Variety Pack</div>
+          <div class="price-line"><span class="unit">6</span><span class="amount">$20</span></div>
+          <div class="price-line"><span class="unit">Dozen</span><span class="amount">$36.50</span></div>
         </div>
       </div>
  
       <div class="menu-card">
         <div class="card-photo">
-          <img class="menu-item" src="images/brownie.png", alt="Slice N Bites brownies">
+          <img class="menu-item" src="images/cookies.jpg" alt="Slice N Bites cookies">
+        </div>
+        <h3>Cookies</h3>
+        <ul class="menu-list">
+          <li>Oreo</li>
+          <li>Blueberry Poptart</li>
+          <li>S'mores</li>
+          <li>Orange creamsicle</li>
+          <li>Strawberry Crunch</li>
+          <li>Chocolate chip</li>
+          <li>Any other flavour</li>
+        </ul>
+        <div class="price-tag">
+          <div class="price-line"><span class="unit">Each</span><span class="amount">$2.00</span></div>
+          <div class="price-line"><span class="unit">Dozen</span><span class="amount">$20</span></div>
+        </div>
+      </div>
+ 
+      <div class="menu-card">
+        <div class="card-photo">
+          <img class="menu-item" src="images/brownie.png" alt="Slice N Bites brownies">
         </div>
         <h3>Brownies</h3>
         <ul class="menu-list">
@@ -179,17 +225,17 @@
  
       <div class="menu-card">
         <div class="card-photo">
-          <img class="menu-item" src="images/tartlet.jpeg", alt="Slice N Bites tartlets">
+          <img class="menu-item" src="images/tartlet.jpeg" alt="Slice N Bites tartlets">
         </div>
         <h3>Tartlets</h3>
         <ul class="menu-list">
-          <li>Lemon meringue<span class="sub">or homemade whipped cream</span></li>
+          <li>Lemon</li>
           <li>Blueberry</li>
-          <li>Chocolate cream custard</li>
-          <li>Fresh fruit</li>
+          <li>Chocolate cream</li>
           <li>Raspberry</li>
           <li>Strawberry</li>
         </ul>
+        <p class="card-note">I cannot make meringue or whipped cream toppings, but I can do pudding or ganache topping instead.</p>
         <div class="price-tag">
           <div class="price-line"><span class="unit">Each</span><span class="amount">$2</span></div>
           <div class="price-line"><span class="unit">Dozen</span><span class="amount">$22</span></div>
@@ -198,7 +244,7 @@
  
       <div class="menu-card">
         <div class="card-photo">
-          <img class="menu-item" src="images/lemon-pie.png", alt="Slice N Bites pies">
+          <img class="menu-item" src="images/lemon-pie.png" alt="Slice N Bites pies">
         </div>
         <h3>Pies</h3>
         <ul class="menu-list menu-list--priced">
@@ -218,7 +264,7 @@
     <div class="menu-grid-cards">
       <div class="menu-card">
         <div class="card-photo">
-          <img class="menu-item" src="images/muffins.png", alt="Slice N Bites muffins">
+          <img class="menu-item" src="images/muffins.png" alt="Slice N Bites muffins">
         </div>
         <h3>Muffins</h3>
         <ul class="menu-list">
@@ -233,7 +279,7 @@
  
       <div class="menu-card">
         <div class="card-photo">
-          <img class="menu-item" src="images/cookies.jpg", alt="Slice N Bites cookies">
+          <img class="menu-item" src="images/cookies.jpg" alt="Slice N Bites cookies">
         </div>
         <h3>Cookies</h3>
         <ul class="menu-list">
@@ -248,22 +294,26 @@
  
       <div class="menu-card">
         <div class="card-photo">
-          <img class="menu-item" class="cupcake-img" src="images/cupcake.png" alt="Slice N Bites cupcake">
+          <img class="menu-item cupcake-img" src="images/cupcake.png" alt="Slice N Bites cupcake">
         </div>
         <h3>Cupcakes</h3>
         <ul class="menu-list">
+          <li>Strawberry Shortcake Crunch</li>
           <li>Boston cream</li>
-          <li>Raspberry</li>
-          <li>Carrot cake</li>
+          <li>Black Forest</li>
+          <li>Chocolate Raspberry</li>
+          <li>Lemon Blueberry</li>
+          <li>Chocolate and Vanilla</li>
         </ul>
         <div class="price-tag">
+          <div class="price-line"><span class="unit">Each</span><span class="amount">$3</span></div>
           <div class="price-line"><span class="unit">Per dozen</span><span class="amount">$35</span></div>
         </div>
       </div>
  
       <div class="menu-card">
         <div class="card-photo">
-          <img class="menu-item" src="images/tartlet.jpeg", alt="Slice N Bites tartlets">
+          <img class="menu-item" src="images/tartlet.jpeg" alt="Slice N Bites tartlets">
         </div>
         <h3>Tartlets</h3>
         <ul class="menu-list">
@@ -271,104 +321,6 @@
         </ul>
         <div class="price-tag">
           <div class="price-line"><span class="unit">20 tartlets</span><span class="amount">$38</span></div>
-        </div>
-      </div>
- 
-      <div class="menu-card">
-        <div class="card-photo">
-          <img class="menu-item" src="images/lemon-cheesecake.JPG", alt="Slice N Bites cheesecakes">
-        </div>
-        <h3>Cheesecakes</h3>
-        <ul class="menu-list">
-          <li>Orange dreamsicle</li>
-          <li>Orange pineapple</li>
-          <li>Cherry · Grape · Lemon</li>
-          <li>Pineapple · Blueberry · Keylime</li>
-          <li>Raspberry · New York</li>
-          <li>Chocolate · Vanilla · Strawberry</li>
-          <li>…and more!</li>
-        </ul>
-        <div class="price-tag">
-          <div class="price-line"><span class="unit">Full 9&Prime; cheesecake</span><span class="amount">$65</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
- 
-  <!-- PANEL: CHEESECAKES -->
-  <section class="menu-panel" data-panel="cheesecakes" role="tabpanel">
-    <div class="menu-banner">
-      <strong>Gluten-free, lactose-free &amp; diabetic-friendly</strong> options available for an additional charge.
-    </div>
- 
-    <div class="section-title">
-      <span class="eyebrow">Pick a flavour</span>
-      <h2>Cheesecake flavours</h2>
-    </div>
- 
-    <div class="flavour-group">
-      <span class="eyebrow">Chocolate &amp; indulgent</span>
-      <ul class="flavour-list">
-        <li>Bar flavours (Aero / Mars / etc.)</li>
-        <li>Milk / dark / white / mint choc</li>
-        <li>Oreo</li>
-        <li>Red velvet</li>
-        <li>Terry's orange choc</li>
-      </ul>
-    </div>
- 
-    <div class="flavour-group">
-      <span class="eyebrow">Specialty</span>
-      <ul class="flavour-list">
-        <li>Cinnamon</li><li>Maple</li><li>Moon-mist</li><li>Almond</li>
-        <li>Pistachio</li><li>Bubblegum</li><li>Mint</li><li>Banana</li><li>Coconut</li>
-      </ul>
-    </div>
- 
-    <div class="flavour-group">
-      <span class="eyebrow">Fruit-forward</span>
-      <ul class="flavour-list">
-        <li>Orange dreamsicle</li><li>Orange-pineapple</li><li>Lemon</li>
-        <li>Blueberry</li><li>Raspberry</li><li>Cherry</li>
-        <li>Grape</li><li>Pineapple</li><li>Keylime</li>
-      </ul>
-    </div>
- 
-    <div class="flavour-group">
-      <span class="eyebrow">Cheesecake classics</span>
-      <ul class="flavour-list">
-        <li>New York</li><li>Chocolate</li><li>Vanilla</li><li>Cherry</li><li>Strawberry</li>
-      </ul>
-    </div>
- 
-    <div class="section-title">
-      <span class="eyebrow">How big?</span>
-      <h2>Sizes &amp; prices</h2>
-    </div>
- 
-    <div class="menu-grid-cards">
-      <div class="size-block">
-        <div class="card-photo">
-          <img class="menu-item" src="images/cheesecake-bites.png", alt="Slice N Bites cheesecake bites">
-        </div>
-        <h3>Cheesecake bites</h3>
-        <span class="eyebrow">Cupcake-sized</span>
-        <div class="size-rows">
-          <div class="size-row"><span>4 pack</span><span class="amount">$10.50</span></div>
-          <div class="size-row"><span>8 pack</span><span class="amount">$18.50</span></div>
-          <div class="size-row"><span>12 pack</span><span class="amount">$28.00</span></div>
-        </div>
-      </div>
-      <div class="size-block">
-        <div class="card-photo">
-          <img class="menu-item" src="images/turtle-cheesecake.jpg", alt="Slice N Bites cheesecakes">
-        </div>
-        <h3>Full cakes</h3>
-        <span class="eyebrow">By diameter</span>
-        <div class="size-rows">
-          <div class="size-row"><span>4 inch</span><span class="amount">$15–17</span></div>
-          <div class="size-row"><span>6 inch</span><span class="amount">$25–30</span></div>
-          <div class="size-row"><span>9 inch</span><span class="amount">$55–60</span></div>
         </div>
       </div>
     </div>
@@ -389,8 +341,8 @@
 </div>
 
 <footer>
-  <a class="social-link" href="https://www.facebook.com/share/1UZSywZuPF/?mibextid=wwXlfr" target="Slice N Bites on Facebook">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true",><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
+  <a class="social-link" href="https://www.facebook.com/share/1UZSywZuPF/?mibextid=wwXlfr" target="_blank" rel="noopener" aria-label="Slice N Bites on Facebook">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
     Find us on Facebook
   </a>
   © 2026 Slice N Bites — All Rights Reserved
