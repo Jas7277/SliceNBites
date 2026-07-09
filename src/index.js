@@ -20,6 +20,21 @@ async function handleFeedback(request, env) {
     return new Response("All fields are required.", { status: 400 });
   }
 
+  // Verify the visitor passed the Turnstile challenge
+  const token = (form.get("cf-turnstile-response") || "").toString();
+  const verify = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      secret: env.TURNSTILE_SECRET_KEY,
+      response: token,
+    }),
+  });
+  const outcome = await verify.json();
+  if (!outcome.success) {
+    return new Response("Couldn't verify you're human — please try again.", { status: 400 });
+  }
+
   const res = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}/email/sending/send`,
     {
