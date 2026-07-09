@@ -1,0 +1,5 @@
+# Slice N Bites — how to report a security issue
+Contact: mailto:jas7277git@gmail.com
+Expires: 2027-07-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://slicenbites.org/.well-known/security.txt
