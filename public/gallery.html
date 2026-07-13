@@ -34,6 +34,33 @@
     }
     .gallery-item:hover img{transform:scale(1.05)}
     .gallery-item .ph-icon{width:52px;height:52px;color:rgba(255,255,255,.85)}
+
+    .gallery-item img { cursor: zoom-in; }
+
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(41, 22, 10, .82);
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .lightbox.is-open { display: flex; }
+  .lightbox img {
+    max-width: min(92vw, 900px); max-height: 88vh;
+    border-radius: calc(var(--radius) * 1.2);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, .45);
+  }
+  .lightbox-close {
+    position: absolute; top: 18px; right: 22px;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: none; cursor: pointer;
+    background: rgba(255, 255, 255, .92); color: var(--color-heading);
+    font-size: 1.5rem; line-height: 1; display: grid; place-items: center;
+  }
+  .lightbox-close:hover { background: #fff; }
+  @media (prefers-reduced-motion: no-preference) {
+    .lightbox.is-open { animation: lbfade .25s ease; }
+    @keyframes lbfade { from { opacity: 0; } to { opacity: 1; } }
+  }
   </style>
 </head>
 <body>
@@ -61,31 +88,37 @@
 
   <div class="gallery-grid">
     <div class="gallery-item">
-      <img src="images/brownie-2.jpg">
+      <img src="images/brownie-2.jpg" alt="Fudgy homemade brownie" loading="lazy">
     </div>
     <div class="gallery-item">
-      <img src="images/choc-chip-cookie.jpg">
+      <img src="images/choc-chip-cookie.jpg" alt="Delicious Chocolate Chip Cookie" loading="lazy">
     </div>
     <div class="gallery-item">
-      <img src="images/fun-cookie.jpg">
+      <img src="images/fun-cookie.jpg" alt="A Funny Cookie with edible eyes" loading="lazy">
     </div>
     <div class="gallery-item">
-      <img src="images/smores-cookie.jpg">
+      <img src="images/smores-cookie.jpg" alt="A S'mores cookie" loading="lazy">
     </div>
     <div class="gallery-item">
-      <img src="images/choc-cookie.jpg">
+      <img src="images/choc-cookie.jpg" alt="Delicious Chocolate Cookie" loading="lazy">
     </div>
     <div class="gallery-item">
-      <img src="images/sugar-cookie.jpg">
+      <img src="images/sugar-cookie.jpg" alt="Delicious Sugar Cookie" loading="lazy">
     </div>
     <div class="gallery-item">
-      <img src="images/fun-cookie-2.jpg">
+      <img src="images/fun-cookie-2.jpg" alt="A different picture of a funny cookie" loading="lazy">
     </div>
     <div class="gallery-item">
-      <img src="images/choc-chip-cookie-2.jpg">
+      <img src="images/choc-chip-cookie-2.jpg" alt="Another Chocolate Chip Cookie" loading="lazy">
     </div>
   </div>
 
+</div>
+
+<!-- Lightbox overlay (shared by every photo) -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged photo">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+  <img id="lightbox-img" src="" alt="">
 </div>
 
 <footer>
@@ -95,6 +128,41 @@
   </a>
   © 2026 Slice N Bites — All Rights Reserved
 </footer>
+
+<script>
+  const grid = document.querySelector(".gallery-grid");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("lightbox-close");
+  let lastFocused = null;
+
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || "";
+    lastFocused = document.activeElement;
+    lightbox.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    closeBtn.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("is-open");
+    lightboxImg.src = "";
+    document.body.style.overflow = "";
+    if (lastFocused) lastFocused.focus();
+  }
+
+  grid.addEventListener("click", (e) => {
+    const img = e.target.closest("img");
+    if (img) openLightbox(img.currentSrc || img.src, img.alt);
+  });
+
+  closeBtn.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox.classList.contains("is-open")) closeLightbox();
+  });
+</script>
 
 </body>
 </html>
