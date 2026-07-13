@@ -64,6 +64,8 @@ header {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
+img { max-width: 100%; }
+
 nav {
   max-width: var(--max-width);
   margin: auto;
@@ -83,6 +85,26 @@ nav a {
 nav a:hover {
   color: var(--color-accent);
   transform: translateY(-1px);
+}
+
+/* ================================
+   MOBILE NAV
+   ================================ */
+@media (max-width: 640px) {
+  nav {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  nav > div:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 6px;
+  }
+  nav a {
+    margin-left: 0;      /* spacing now comes from the gap above */
+    padding: 6px 10px;
+  }
 }
 
 /* ================================
