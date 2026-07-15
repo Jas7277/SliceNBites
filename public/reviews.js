@@ -15,7 +15,7 @@ const REVIEWS = [
         stars: 5
     },
     {
-        quote: "I had the cheesecake bites which were delicious as usual!! I also tried the cookie sampler, and omg so so delicious!! Will definitely get the cookies in future orders!! &#x1F924;&#x1F924;",
+        quote: "I had the cheesecake bites which were delicious as usual!! I also tried the cookie sampler, and omg so so delicious!! Will definitely get the cookies in future orders!! 🤤🤤",
         name: "Brooke",
         stars: 5
     },
