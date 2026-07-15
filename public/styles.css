@@ -341,6 +341,15 @@ footer {
   color: var(--color-heading);
   font-size: 0.9rem;
 }
+.review-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+.review-summary .stars { display: inline-flex; }
+.review-summary .count { font-weight: 400; color: var(--color-text); }
 
 /* Pill chips (e.g. popular treats) */
 .sellers {
