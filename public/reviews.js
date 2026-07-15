@@ -23,5 +23,10 @@ const REVIEWS = [
         quote: "The food was absolutely delicious!",
         name: "Jayce",
         stars: 5
+    },
+    {
+        quote: "",
+        name: "Jason",
+        stars: 5
     }
 ];
