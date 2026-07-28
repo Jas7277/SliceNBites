@@ -15,6 +15,8 @@
   --color-heading: #7a3f26;
   --color-accent: #d87d51;
   --color-accent-hover: #c05d2c;
+  --color-accent-text: #a84d1c;
+  --color-accent-button: #b5541f;
   --color-hero-bg: #ffe7d8;
 
   /* Typography */
@@ -144,7 +146,7 @@ h1, h2 {
   display: inline-block;
   margin-top: var(--space-md);
   padding: var(--button-padding);
-  background: var(--color-accent);
+  background: var(--color-accent-button);
   color: white;
   border-radius: calc(var(--button-radius) * 1.5);
   text-decoration: none;
@@ -211,7 +213,7 @@ footer {
   letter-spacing: 0.18em;
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 /* Section rhythm */
@@ -306,7 +308,7 @@ footer {
 }
 
 .feature-card a {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-weight: 600;
   text-decoration: none;
 }
@@ -384,7 +386,7 @@ footer {
 /* Inline text link with arrow */
 .text-link {
   display: inline-block;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-weight: 600;
   text-decoration: none;
   margin-top: var(--space-md);
@@ -448,7 +450,7 @@ a:focus-visible,
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-weight: 600;
   text-decoration: none;
   margin-right: 8px;
