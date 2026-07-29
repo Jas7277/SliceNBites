@@ -174,76 +174,77 @@
 </footer>
  
 <script>
-  const contactForm = document.getElementById("feedback-form");
-  const formStatus = document.getElementById("form-status");
-  const submitBtn = document.getElementById("submit-btn");
-  const widget = document.getElementById("turnstile-widget");
-
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  if (!contactForm) {
-    return;
-  }
-
-  function setStatus(message, state) {
-    formStatus.textContent = message;
-    formStatus.className = "form-status" + (state ? " is-" + state : "");
-  }
-
-  function resetTurnstile() {
-    if (typeof turnstile === "undefined") {
-      return;
-    }
-    try {
-      turnstile.reset(widget);
-    } catch (err) {
-      console.warn("Turnstile reset failed:", err);
-    }
-  }
-
-  function setBusy(busy) {
-    submitBtn.disabled = busy;
-    submitBtn.textContent = busy ? "Sending..." : "Send message";
-    contactForm.setAttribute("aria-busy", busy ? "true" : "false");
-  }
+  (function () {
+    const form = document.getElementById("feedback-form");
+    const status = document.getElementById("form-status");
+    const submitBtn = document.getElementById("submit-btn");
+    const widget = document.getElementById("turnstile-widget");
  
-  contactForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    if (submitBtn.disabled) {
-      return;
+    // Keep the footer year current without an annual edit.
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+ 
+    if (!form) return;
+ 
+    function setStatus(message, state) {
+      status.textContent = message;
+      status.className = "form-status" + (state ? " is-" + state : "");
     }
-
-    const data = new FormData(contactForm);
-
-    if (!data.get("cf-turnstile-response")) {
-      setStatus("Please complete the verification check below.", "error");
-      return;
-    }
-
-    setBusy(true);
-    setStatus("Sending...", "pending");
-
-    try {
-      const response = await fetch("/api/feedback", {
-        method: "POST",
-        body: data
-      });
-      const text = await response.text();
-
-      if (response.ok) {
-        setStatus(text || "Thanks! Your message has been sent.", "success");
-        contactForm.reset();
-      } else {
-        setStatus(text || "Something went wrong. Please try again.", "error");
+ 
+    // A Turnstile token is single-use. Without this, the second submit in a
+    // page session always fails verification.
+    function resetTurnstile() {
+      if (typeof turnstile === "undefined") return;
+      try {
+        turnstile.reset(widget);
+      } catch (err) {
+        console.warn("Turnstile reset failed:", err);
       }
-    } catch {
-      setStatus("Network error - please try again.", "error")
-    } finally {
-      resetTurnstile();
-      setBusy(false);
     }
-  });
+ 
+    function setBusy(busy) {
+      submitBtn.disabled = busy;
+      submitBtn.textContent = busy ? "Sending…" : "Send message";
+      form.setAttribute("aria-busy", busy ? "true" : "false");
+    }
+ 
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (submitBtn.disabled) return; // guard against double submits
+ 
+      const data = new FormData(form);
+ 
+      // Catch the missing-token case before a pointless round trip.
+      if (!data.get("cf-turnstile-response")) {
+        setStatus("Please complete the verification check below.", "error");
+        return;
+      }
+ 
+      setBusy(true);
+      setStatus("Sending…", "pending");
+ 
+      try {
+        const response = await fetch("/api/feedback", {
+          method: "POST",
+          body: data,
+        });
+        const text = await response.text();
+ 
+        if (response.ok) {
+          setStatus(text || "Thanks! Your message has been sent.", "success");
+          form.reset();
+        } else {
+          setStatus(text || "Something went wrong. Please try again.", "error");
+        }
+      } catch {
+        setStatus("Network error — please try again.", "error");
+      } finally {
+        // Always reset: the token is spent whether or not the send succeeded.
+        resetTurnstile();
+        setBusy(false);
+      }
+    });
+  })();
 </script>
 </body>
 </html>
