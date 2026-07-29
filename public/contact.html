@@ -156,45 +156,88 @@
           <label for="message">Your message</label>
           <textarea id="message" name="message" placeholder="Tell me what you're looking for…" rows="5" required></textarea>
         </div>
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAADypbH69USyicnqr"></div>
-        <button class="button" type="submit">Send message</button>
+        <div class="cf-turnstile" id="turnstile-widget" data-sitekey="0x4AAAAAADypbH69USyicnqr"></div>
+        <button class="button" type="submit"id="submit-btn">Send message</button>
       </form>
       <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
     </div>
   </section>
  
 </div>
- 
-<script>
-  const contactForm = document.getElementById("feedback-form");
-  const formStatus = document.getElementById("form-status");
- 
-  contactForm.addEventListener("submit", async (event) => {
-    event.preventDefault();                  // stop the page reload
-    formStatus.textContent = "Sending…";
-    formStatus.className = "form-status is-pending";
-    try {
-      const response = await fetch("/api/feedback", {
-        method: "POST",
-        body: new FormData(contactForm),     // sends name, email, message
-      });
-      formStatus.textContent = await response.text();
-      formStatus.className = "form-status " + (response.ok ? "is-success" : "is-error");
-      if (response.ok) contactForm.reset();
-    } catch {
-      formStatus.textContent = "Network error — please try again.";
-      formStatus.className = "form-status is-error";
-    }
-  });
-</script>
 
 <footer>
   <a class="social-link" href="https://www.facebook.com/share/1UZSywZuPF/?mibextid=wwXlfr" target="_blank" rel="noopener" aria-label="Slice N Bites on Facebook">
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
     Find us on Facebook
   </a>
-  © 2026 Slice N Bites — All Rights Reserved
+  © <span id="year">2026</span> Slice N Bites — All Rights Reserved
 </footer>
+ 
+<script>
+  const contactForm = document.getElementById("feedback-form");
+  const formStatus = document.getElementById("form-status");
+  const submitBtn = document.getElementById("submit-btn");
+  const widget = document.getElementById("turnstile-widget");
 
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  if (!contactForm) return;
+
+  function setStatus(message, state) {
+    formStatus.textContent = message;
+    formStatus.className = "form-status" + (state ? " is-" + state : "");
+  }
+
+  function resetTurnstile() {
+    if (typeof turnstile === "undefined") return;
+    try {
+      turnstile.reset(widget);
+    } catch (err) {
+      console.warn("Turnstile reset failed:", err);
+    }
+  }
+
+  function setBusy(busy) {
+    submitBtn.disabled = busy;
+    submitBtn.textContent = busy ? "Sending..." : "Send message";
+    contactForm.setAttribute("aria-busy", busy ? "true" : "false");
+  }
+ 
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (submitBtn.disabled) return;
+
+    const data = new FormData(contactForm);
+
+    if (!data.get("cf-turnstile-response")) {
+      setStatus("Please complete the verification check below.", "error");
+      return;
+    }
+
+    setBusy(true);
+    setStatus("Sending...", "pending");
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        body: data
+      });
+      const text = await response.text();
+
+      if (response.ok) {
+        setStatus(text || "Thanks! Your message has been sent.", "success");
+        contactForm.reset();
+      } else {
+        setStatus(text || "Something went wrong. Please try again.", "error");
+      }
+    } catch {
+      setStatus("Network error - please try again.", "error")
+    } finally {
+      resetTurnstile();
+      setBusy(false);
+    }
+  });
+</script>
 </body>
 </html>
