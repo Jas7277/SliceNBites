@@ -182,7 +182,9 @@
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  if (!contactForm) return;
+  if (!contactForm) {
+    return;
+  }
 
   function setStatus(message, state) {
     formStatus.textContent = message;
@@ -190,7 +192,9 @@
   }
 
   function resetTurnstile() {
-    if (typeof turnstile === "undefined") return;
+    if (typeof turnstile === "undefined") {
+      return;
+    }
     try {
       turnstile.reset(widget);
     } catch (err) {
@@ -206,7 +210,9 @@
  
   contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (submitBtn.disabled) return;
+    if (submitBtn.disabled) {
+      return;
+    }
 
     const data = new FormData(contactForm);
 
