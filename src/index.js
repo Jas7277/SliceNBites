@@ -8,17 +8,23 @@ const SECURITY_TXT = [
 ].join("\n");
 
 const LIMITS = { name: 100, email: 254, message: 5000 };
+const SECURITY_HEADERS = {
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  "Content-Security-Policy": "default-src 'self'; base-uri 'self'; form-action 'self' https://slicenbites.org; frame-ancestors 'none'; img-src 'self' data: https:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com https://api.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none';",
+};
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.pathname === "/.wellknown/security.txt") {
-      return new Response(SECURITY_TXT, {
-        headers: {
-          "Content-Type": "text/plain; charset=utf-8",
-          "Cache-Control": "public, max-age=86400"
-        },
+    if (url.pathname === "/.well-known/security.txt" || url.pathname === "/.wellknown/security.txt") {
+      return text(SECURITY_TXT, 200, {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "public, max-age=86400",
       });
     }
 
@@ -29,7 +35,16 @@ export default {
       return handleFeedback(request, env);
     }
 
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+
+    if (response.status === 404) {
+      const notFound = await env.ASSETS.fetch(new Request(new URL("/404.html", request.url)));
+      if (notFound.ok) {
+        return withSecurityHeaders(notFound, { "Cache-Control": "public, max-age=300, must-revalidate" });
+      }
+    }
+
+    return withSecurityHeaders(response, cacheHeadersFor(url.pathname));
   }
 };
 
@@ -93,12 +108,12 @@ async function handleFeedback(request, env) {
     to: "slicenbites@hotmail.com",
     from: "feedback@slicenbites.org",
     reply_to: safeEmail,
-    subject: 'New contact message from ${safeName}',
-    text: 'Name: ${safeName}\nEmail: ${safeEmail}\n\n${message}',
+    subject: `New contact message from ${safeName}`,
+    text: `Name: ${safeName}\nEmail: ${safeEmail}\n\n${message}`,
     html:
-      '<p><strong>Name:</strong> ${escapeHTML(safeName)}</p>' +
-      '<p><strong>Email:</strong> ${escapeHTML(safeEmail)}</p>'+
-      toParagraphs(message)
+      `<p><strong>Name:</strong> ${escapeHTML(safeName)}</p>` +
+      `<p><strong>Email:</strong> ${escapeHTML(safeEmail)}</p>` +
+      toParagraphs(message),
   };
 
   let result;
@@ -109,7 +124,7 @@ async function handleFeedback(request, env) {
       {
         method: "POST",
         headers: {
-          Authorization: 'Bearer ${env.EMAIL_API_TOKEN}',
+          Authorization: `Bearer ${env.EMAIL_API_TOKEN}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
@@ -143,10 +158,33 @@ async function handleFeedback(request, env) {
 }
 
 function text(body, status, extraHeaders = {}) {
-  return new Response(body, {
-    status,
-    headers: { "Content-Type": "text/plain; charset=utf-8", ...extraHeaders }
+  return withSecurityHeaders(
+    new Response(body, {
+      status,
+      headers: { "Content-Type": "text/plain; charset=utf-8", ...extraHeaders }
+    })
+  );
+}
+
+function withSecurityHeaders(response, extraHeaders = {}) {
+  const headers = new Headers(response.headers);
+
+  for (const [name, value] of Object.entries({ ...SECURITY_HEADERS, ...extraHeaders })) {
+    headers.set(name, value);
+  }
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
   });
+}
+
+function cacheHeadersFor(pathname) {
+  const isStaticAsset = /\.(css|js|png|jpe?g|svg|ico|webp|gif|avif|woff2?|ttf|eot)$/i.test(pathname);
+  return {
+    "Cache-Control": isStaticAsset ? "public, max-age=31536000, immutable" : "public, max-age=0, must-revalidate",
+  };
 }
 
 function field(form, key, max) {
@@ -178,6 +216,6 @@ function escapeHTML(value) {
 function toParagraphs(value) {
   return value
     .split(/\n{2,}/)
-    .map((block) => '<p>${escapeHtml(block).replace(/\n/g, "<br>")}</p>')
+    .map((block) => `<p>${escapeHTML(block).replace(/\n/g, "<br>")}</p>`)
     .join("");
 }
