@@ -5,6 +5,11 @@ const REVIEWS = [
         stars: 5
     },
     {
+        quote: "Tried the brownie the other day. It was fantastic. Rich, creamy and gooey. Loved it! Can't wait to try something new next time.",
+        name: "Stacia",
+        stars: 5
+    },
+    {
         quote: "I went up to get a box of cheesecake bites and also tried the sampler cookies they were all delicious 100% recommend!",
         name: "Katie",
         stars: 5
